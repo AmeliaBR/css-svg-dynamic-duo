@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     xml:lang="en"
+     viewBox="0 0 100 100" width="100%" height="100%">
+  <title>Treasure Map</title>
+  <defs>
+    <style type="text/css">
+svg {
+  background-color: #cec;
+}
+text {
+  font-family: Comic Sans MS, cursive;
+  font-size: 6px;
+  font-weight: bold;
+}
+
+@media (min-width: 20em) AND (min-height: 20em){
+  text {
+    font-size: 4.5px;
+    font-weight: normal;
+  }
+  .slim-this {
+    stroke-width: 2px;
+  }
+}
+
+@media (min-width: 36em) AND (min-height: 36em){
+  text {
+    font-size: 3px;
+  }
+  .slim-this {
+    stroke-width: .7px;
+  }
+}
+    
+    </style>
+    <symbol id="tree" viewBox="-5 0 10 15"
+            stroke-width=".3" overflow="visible">
+      <path fill="saddleBrown" stroke="peru"
+            d="M-2,15 Q-1,15 -1,11 L1,11 Q1.1,15 2,15
+               M -0.5,13.1 V14.2 M0,12 V13 M0.5,13.6 V14.5"/>
+      <path fill="forestGreen"
+            stroke="darkGreen"
+            d="M0,12L -5,13 -2,10, -4,11 -2,8 -4,9.5 
+               -1,6 -3,7 -1.5,4.5 -3,5 -1,3 -2.5,4 0,0
+               2,4 1,3 2,5 1,4.5 3,7 1.5,6.5 4,9
+               2,8 4.5,11 3,10 5,13 Z
+               M0,11L-2,12 -1,10
+               M0.5,8 L-1,9 0,7
+               M-0.5,4 L1,7 0,6
+               M2,10 L 3,12 1,10.5" />
+    </symbol>
+  </defs>
+  <g id="home" transform="translate(50,10)">
+    <rect width="20" height="15" x="-10" y="10"
+          fill="fireBrick"/>
+    <polygon fill="darkSlateGray"
+             points="-12,10 0,0 12,10"/>
+    <path fill="saddleBrown" stroke="tan"
+          d="M-7,25v-10h5v10 m-3,-6v0.5" />
+    <path fill="lightSkyBlue" stroke="tan"
+          d="M2,15 h6v6h-6z m3,0v6" />
+  </g>
+  <text transform="translate(45,7)rotate(5)">HOME</text>
+  <g id="mountains" fill="gray" stroke="dimGray">
+    <path d="M70,25L80,5 88,25"/>
+    <path d="M80,25L90,6 96,25"/>
+    <path d="M65,30L75,10L80,30"/>
+    <path d="M75,35L85,12L95,35"/>
+    <path d="M85,40L93,22L99,40"/>
+  </g>
+  <g id="forest">
+    <use xlink:href="#tree" width="20" height="30" x="10"/>
+    <use xlink:href="#tree" width="21" height="33" x="16" y="7"/>
+    <use xlink:href="#tree" width="21" height="33" x="2" y="10"/>
+    <use xlink:href="#tree" width="18" height="27" x="10" y="17"/>
+    <use xlink:href="#tree" width="18" height="27" x="1" y="25"/>
+    <use xlink:href="#tree" width="18" height="27" x="18" y="23"/>
+  </g>
+  <path id="lake" fill="mediumBlue" stroke="navy"
+        d="M30,80 C40,80 50,55 70,60S 80,40 70,45 
+           S40,50 35,50 S25,50 20,70 S20,80 30,80 Z" />
+  
+  <path id="route" class="slim-this" fill="none" 
+        stroke="black" stroke-dasharray="5 2" stroke-width="3"
+        d="M45,35 C40,55 60,35 75,40 S100,60 90,70
+           S73,75 77,85 S 65,90 60,80 S50,70 30,90 S0,90 8,78"/>
+  
+  <use xlink:href="#tree" width="18" height="27" x="58" y="48"/>
+  <use xlink:href="#tree" width="16" height="24" x="83" y="68"/>
+  <use xlink:href="#tree" width="16" height="24" x="53" y="73"/>
+  
+  <path id="theSpot" stroke="black" fill="none" stroke-width="2"
+        d="M5,75l5,5m-5,0l5,-5"/>
+  
+  <text transform="translate(3,73)rotate(-45)">TREASURE</text>
+  
+</svg>

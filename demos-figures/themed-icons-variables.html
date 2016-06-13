@@ -1,0 +1,139 @@
+<!DOCTYPE html><html class=''>
+<head>
+  <meta charset='UTF-8'>
+  <link rel="canonical" href="http://codepen.io/AmeliaBR/pen/fsamq" />
+
+
+<style class="cp-pen-styles">svg {
+  display:inline-block;
+  height:100px; 
+  width:100px;
+  margin:10px;
+  border:1px solid;
+  background:#eee;
+}
+svg.raw {
+/* Default styles for the initial SVG.
+ * Because they are defined on the <svg>,
+ * not the individual graphics elements, 
+ * they will NOT be inherited by the <use> references.
+ */
+  fill:rgba(255,250,220,0.4);
+  stroke: rgba(0,0,0,0.7);
+  stroke-width:2;
+}
+svg.icon-style-A {
+/* Set the paint color for browsers that don't support
+ * CSS variables:
+ */
+  color:seagreen;
+  fill:blueviolet;
+/* Set the CSS variables for this instance:
+ */
+  --color_palette:burlywood;
+  --color_paint1:blueviolet;
+  --color_paint2:seagreen;
+  --color_paint3:royalblue;
+  --stroke_palette:saddlebrown;
+  --stroke-width_palette:1.5px;
+/* Of course, you can also set other styles to be inherited
+ * by all elements that don't specifically set these properties.
+ */
+  stroke:#222; 
+  stroke-width:0.5px;
+}
+svg.icon-style-B {
+/* Set the paint color for browsers that don't support
+ * CSS variables:
+ */
+  color:lavender;
+  fill:lightpink;
+/* Set the CSS variables for this instance:
+ */
+  --color_palette:blanchedalmond;
+  --color_paint1:lavender;
+  --color_paint2:mintcream;
+  --color_paint3:lightpink;
+  --stroke_palette:white;
+  --stroke-width_palette:1px;
+/* set some icon styles on the <svg> itself: */
+  background:aliceblue;
+  border-radius:20%;
+  border:none;
+  box-shadow:royalblue 0 0 2px;
+}
+svg.icon-style-C {
+/* Set the paint color for browsers that don't support
+ * CSS variables:
+ */
+  color:green;
+  fill:blue;
+/* Set the CSS variables for this instance:
+ */
+  --color_palette:beige;
+  --color_paint1:red;
+  --color_paint2:blue;
+  --color_paint3:green;
+/* In this icon, the --stroke*_palette variables aren't set, so the palette inherits the stroke styles the same as the other elements
+ */
+  stroke:#aaa; 
+  stroke-width:1.5px;
+/* icon styles for the <svg> itself: */
+  background:#222;
+  border-radius:10%;
+  border:solid gray;
+}</style></head><body>
+<svg  xmlns="http://www.w3.org/2000/svg" 
+     viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"
+     class="raw">
+  <g id="palette">
+  <path style="fill:var(--color_palette, #b84);
+               stroke:var(--stroke_palette);
+               stroke-width:var(--stroke-width_palette);"
+        fill="#b84"
+        d="M5,90
+           C5,45 40,-5 75,10 
+           C110,25 80,95 60,95
+           C50,95 50,75 30,75
+           C20,75 17,95 12,95
+           C10,95 5,95 5,90 Z"/>
+  <path style="fill:var(--color_paint1);"
+        d="M30,50 
+           c-10,0 -20,20 -5,15
+           s15,-15 5,-15z
+           "/>
+  <path style="fill:currentColor;fill:var(--color_paint2, currentColor);"
+        d="M45,30 
+           c-10,0 -15,15 -5,15
+           s10,-15 5,-15z
+           "/>
+  <path style="fill:var(--color_paint3);"
+        d="M70,20 
+           c-10,0 -20,15 -5,15
+           s10,-15 5,-15z
+           "/>
+  <path style="fill:currentColor;fill:var(--color_paint2, currentColor);"
+        d="M75,45 
+           c-10,0 -20,15 -5,15
+           s15,-15 5,-15z
+           "/>
+  <path style="fill:var(--color_paint1);"
+        d="M65,65 
+           c-10,0 -15,25 -5,20
+           s10,-20 5,-20z"/>
+  </g>
+</svg>
+  
+<svg class="icon-style-A">
+    <use xlink:href="#palette"/>
+</svg>
+  
+<svg class="icon-style-B">
+    <use xlink:href="#palette"/>
+</svg>
+  
+<svg class="icon-style-C">
+    <use xlink:href="#palette"/>
+</svg>
+
+</body></html>
