@@ -52,6 +52,9 @@ So HTML got a sidekick.  HTML got CSS.  Like a helpful squire, CSS took care of 
 
 But CSS, in this era, was still just a sidekick.  It only focused on helping HTML.  HTML was all about text, so CSS was all about styling text.  Sure, CSS showed up briefly in a dead-end story line involving XML on the web, but it really didn't involve any character development for CSS.  CSS was still all about styling text documents. 
 
+<figure>
+<object type="text/html" data="demos-figures/html-css-origins.html"></object>
+</figure>
 
 ### Enter SVG
 
@@ -105,7 +108,9 @@ Each half of the team bring their own special skills.
 
 ### SVG's Skills
 
-What can SVG do that CSS can't do alone?
+What can SVG do that CSS can't do alone? 
+<img style="float: right; max-width: 30%; max-height: 40vh;" 
+     src="demos-figures/svg-shield.svg" />
 
 - Shapes.
   Real shapes, with complex curves and multiple points.  It can draw shapes with a single element, no hacking about with borders and overflow and transforms and pseudo-elements.  This is SVG's specialty, it does it so much better than CSS can alone.
@@ -129,6 +134,8 @@ What can SVG do that CSS can't do alone?
 ### CSS's Skills
 
 What can CSS do that SVG can't do alone?
+<img style="float: right; max-width: 35%; max-height: 30vh;" 
+     src="demos-figures/css-shield.svg" />
 
 - Classes.
   Classes are so much a part of CSS you don't even think about them anymore, but they save an awful lot of typing compared to styling elements individually.  Especially if you want to change styles later.
@@ -155,6 +162,10 @@ What can CSS do that SVG can't do alone?
 ### SVG+CSS Synergy
 
 And then there are tricks that SVG taught to CSS, which CSS is making even better:
+<img style="float: right; max-width: 30%; max-height: 40vh;" 
+     src="demos-figures/svg-shield.svg" />
+<img style="float: right; max-width: 35%; max-height: 30vh; margin-top: 20vh; margin-right: -20%" 
+     src="demos-figures/css-shield.svg" />
 
 - Transforms.
   2D Transformations have been a fundamental part of SVG layout from the beginning.  CSS extends that syntax with some new shorthands, units and percentages, and 3D transformations to take it to a whole new dimension.
@@ -339,7 +350,7 @@ There are many examples available, here is a very simple one I created using the
 </div></figure>
 
 
-## The Story's Not Over
+## The Legend Continues
 
 There are still lots of obstacles to overcome.  There are bugs in browser implementations, there are bugs in the specs, there are browsers that haven't implemented specs yet, and there are specs that haven't been written yet.
 

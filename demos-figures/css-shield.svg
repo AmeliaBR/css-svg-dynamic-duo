@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+ height="100%" width="100%" id="logo" 
+ viewBox="-32 -1 64 52">
+    <title>CSS Shield logo</title>
+    <style>
+    svg {  
+        font: bold 16px Trebuchet, Tahoma, sans-serif;
+        text-anchor: middle;
+    }
+    </style>
+    <defs>
+      <path id="shield" d="M-20,0 L20,0 16,45 0,50 -16,45 Z"
+             stroke-width="5"/>
+      <linearGradient id="bevel">
+        <stop offset="32%" stop-opacity="0.2" stop-color="#333" />
+        <stop offset="33%" stop-opacity="0" stop-color="#333" />
+        <stop offset="67%" stop-opacity="0" stop-color="#fff" />
+        <stop offset="68%" stop-opacity="0.2" stop-color="#fff" />
+      </linearGradient>
+    </defs>
+  
+      <g id="css">
+        <use xlink:href="#shield" fill="gold"/>
+        <text x="0" y="20" dy="0 10 10" 
+              fill="sienna" stroke="darkGoldenRod">CSS</text>
+        <use xlink:href="#shield" fill="url(#bevel)"/>
+        <g fill="gold" stroke="darkGoldenRod" font-size="48px" font-weight="normal">
+          <text x="-20" y="40" rotate="-10">{</text>
+          <text x="20" y="40" rotate="10">}</text>
+        </g>
+      </g>
+</svg>
