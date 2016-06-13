@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    #scene-switcher {
+      text-align: center;
+      max-width: 100%;
+      height: 100vh;
+    }
+    svg {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: calc(100vh - 3em);
+      border: outset gray;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="scene-switcher" role="radiogroup" 
+       aria-label="The story of HTML and CSS, in 8 scenes">
+  <input type="radio" name="keyframe" value="1" checked="checked"
+         aria-label="Scene 1: HTML stands alone" 
+         aria-controls="graphic" /><!-- HTML shield -->
+  <input type="radio" name="keyframe" value="2"
+         aria-label="Scene 2: HTTP provides a ride" 
+         aria-controls="graphic" /><!-- on HTTP horse -->
+  <input type="radio" name="keyframe" value="3" 
+         aria-label="Scene 3: HTML is given a font tag" 
+         aria-controls="graphic" /><!-- font tag -->
+  <input type="radio" name="keyframe" value="4" 
+         aria-label="Scene 4: HTML is given a center tag" 
+         aria-controls="graphic" /><!-- center tag -->
+  <input type="radio" name="keyframe" value="5" 
+         aria-label="Scene 5: and a big tag and a small tag" 
+         aria-controls="graphic" /><!-- big and small tag -->
+  <input type="radio" name="keyframe" value="6" 
+         aria-label="Scene 6: and a blinking blink tag, sinking HTML down" 
+         aria-controls="graphic" /><!-- blink tag -->
+  <input type="radio" name="keyframe" value="7"
+         aria-label="Scene 7: CSS arrives" 
+         aria-controls="graphic" /><!-- CSS arrives -->
+  <input type="radio" name="keyframe" value="8" 
+         aria-label="Scene 8: Presentational markup is vanquished by CSS, HTML stands tall again" 
+         aria-controls="graphic" /><!-- clears away presentation tags -->
+  
+  <svg id="graphic" viewBox="-75 0 150 100" 
+       role="img" aria-labelledby="scene-switcher">
+    <defs>
+      <path id="shield" d="M-20,0 L20,0 16,45 0,50 -16,45 Z"
+             stroke-width="5"/>
+      <linearGradient id="bevel">
+        <stop offset="32%" stop-opacity="0.2" stop-color="#333" />
+        <stop offset="33%" stop-opacity="0" stop-color="#333" />
+        <stop offset="67%" stop-opacity="0" stop-color="#fff" />
+        <stop offset="68%" stop-opacity="0.2" stop-color="#fff" />
+      </linearGradient>
+    </defs>
+    <style>
+      svg {
+        text-anchor: middle;
+        font: bold 16px sans-serif;
+      }
+      #html {
+        font-size: 20px;
+      }
+      #http {
+        z-index: -10;
+        font-size: 48px;
+        fill: #532;
+        stroke: #863;
+        stroke-width: 0.5px;
+      }
+      #tags {
+        font-family: Consolas, monospace;
+      }
+      #tags text:nth-of-type(odd) {
+        fill: #334;
+      }
+      #tags text:nth-of-type(even) {
+        fill: #611;
+      }
+      .blink {
+        animation: blink 1s infinite alternate;
+      }
+      @keyframes blink {
+        to {opacity: 0.1;}
+      }
+      #scene, #html, #http, #http > text, #tags, #tags > text, #css {
+        transition: opacity 0.5s,
+                    transform 1s;
+      }
+      
+      /* Overal scene */
+      /* Frame 1-2 */
+      [name=keyframe]:nth-of-type(-n+2):checked ~ #graphic 
+        #scene { 
+          transform: translate(0, 0) scale(1); 
+      }
+      [name=keyframe]:nth-of-type(3):checked ~ #graphic 
+        #scene { 
+          transform: translate(0, 5px) scale(1); 
+      }
+      [name=keyframe]:nth-of-type(4):checked ~ #graphic 
+        #scene { 
+          transform: translate(0, 10px) scale(1); 
+      }
+      [name=keyframe]:nth-of-type(5):checked ~ #graphic 
+        #scene { 
+          transform: translate(0, 20px) scale(1); 
+      }
+      /* Frame 6-7 */
+      [name=keyframe]:nth-of-type(n+6):checked ~ #graphic 
+        #scene { 
+          transform: translate(0, 25px) scale(1); 
+      }
+      /* Frame 8 */
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #scene { 
+          transform: translate(-20px, 0) scale(0.8); 
+      }
+      
+      
+      /* HTML */
+      /* Frame 1 */
+      [name=keyframe]:nth-of-type(1):checked ~ #graphic 
+        #html { 
+          transform: translate(0, 10px) scale(1.3) rotate(0deg); 
+      }
+      /* Frame 2-5, 8 */
+      [name=keyframe]:nth-of-type(n+2):checked ~ #graphic 
+        #html { 
+          transform: translate(0, 10px) scale(0.9) rotate(0deg); 
+      }
+      /* Frame 6-7 */
+      [name=keyframe]:nth-of-type(n+6):nth-of-type(-n+7):checked ~ #graphic 
+        #html { 
+          transform: translate(0, 15px) scale(0.9) rotate(10deg); 
+      }
+      
+      /* HTTP */
+      /* Frame 1 */
+      [name=keyframe]:nth-of-type(1):checked ~ #graphic 
+        #http { 
+          display: none; 
+          opacity: 0; 
+          transform: translate(-50px,95px) scale(0.7);
+      }
+      /* Frame 2+ */
+      [name=keyframe]:nth-of-type(n+2):checked ~ #graphic 
+        #http {
+          transform: translate(0, 95px) scale(1);
+      }
+      
+      /* Tags */
+      /* base position */
+      [name=keyframe]:nth-of-type(n+1):checked ~ #graphic 
+        #tags text { 
+          display: none;
+          transform: translate(0,-75px) rotate(0deg);
+      } 
+      /* font */
+      [name=keyframe]:nth-of-type(n+3):checked ~ #graphic 
+        #tags text:nth-child(1) { 
+          display: block;
+          transform: translate(-25px, 10px) rotate(-30deg);
+      }
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #tags text:nth-child(1) { 
+          transform: translate(75px, 100px) rotate(-5deg);
+      }
+      /* center */ 
+      [name=keyframe]:nth-of-type(n+4):checked ~ #graphic 
+        #tags text:nth-child(2) { 
+          display: block;
+          transform: translate(0px, -2px) rotate(2deg);
+      }
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #tags text:nth-child(2) { 
+          transform: translate(85px, 95px) rotate(5deg);
+      }
+      /* big */
+      [name=keyframe]:nth-of-type(n+5):checked ~ #graphic 
+        #tags text:nth-child(3) { 
+          display: block;
+          transform: translate(30px, 5px) rotate(35deg);
+      }
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #tags text:nth-child(3) { 
+          transform: translate(95px, 85px) rotate(-95deg);
+      }
+      /* small */
+      [name=keyframe]:nth-of-type(n+5):checked ~ #graphic 
+        #tags text:nth-child(4) { 
+          display: block;
+          transform: translate(35px, -12px) rotate(-10deg);
+      }
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #tags text:nth-child(4) { 
+          transform: translate(100px, 85px) rotate(15deg);
+      }
+      /* blink */ 
+      [name=keyframe]:nth-of-type(n+6):checked ~ #graphic 
+        #tags text:nth-child(5) { 
+          display: block;
+          transform: translate(-5px, -10px) rotate(-2deg);
+      }
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #tags text:nth-child(5) { 
+          transform: translate(90px, 90px) rotate(-10deg);
+          animation-iteration-count: 2;
+      }
+      
+      /* CSS */
+      [name=keyframe]:nth-of-type(-n+6):checked ~ #graphic 
+        #css  { 
+          display: none;
+          transform: translate(100px, 20px) rotate(10deg);
+      }
+      [name=keyframe]:nth-of-type(n+7):checked ~ #graphic 
+        #css  { transform: translate(60px, 20px) rotate(-40deg); }
+      [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
+        #css  { transform: translate(85px, 35px) rotate(0deg); }
+      
+    </style>
+    <g id="scene" transform="scale(0.8) translate(-20,0)">
+      <g id="tags">
+        <text transform="translate(-20)">&lt;font&gt;</text>
+        <text y=10>&lt;center&gt;</text>
+        <text y=10 font-size="150%">&lt;big&gt;</text>
+        <text y=10 font-size="50%">&lt;small&gt;</text>
+        <text class="blink">&lt;blink&gt;</text>
+      </g>
+      <g id="html" transform="translate(0, 10) scale(0.9)">
+        <use xlink:href="#shield" fill="tomato" stroke="firebrick"/>
+        <text fill="white"
+               x="-7 7 -7 7" y="0.9em 1.2em 1.8em 2.1em">HTML</text>
+        <use xlink:href="#shield" fill="url(#bevel)" stroke="url(#bevel)" />
+      </g>
+      <g id="http" transform="translate(0,90)">
+        <text x="-35" y="-15" rotate="-30">H</text>
+        <text x="-15" y="-2" rotate="5">T</text>
+        <text x="15" y="1" rotate="-2">T</text>
+        <text x="40" rotate="-5">P</text>
+      </g>
+      <g id="css" transform="translate(85, 35)">
+        <use xlink:href="#shield" fill="gold"/>
+        <text x="0" y="20" dy="0 10 10" 
+              fill="sienna" stroke="darkGoldenRod">CSS</text>
+        <use xlink:href="#shield" fill="url(#bevel)"/>
+        <g fill="gold" stroke="darkGoldenRod" font-size="48px" font-weight="normal">
+          <text x="-20" y="40" rotate="-10">{</text>
+          <text x="20" y="40" rotate="10">}</text>
+        </g>
+      </g>
+    </g>
+  </svg>
+  </div>
+</body>
+</html>
