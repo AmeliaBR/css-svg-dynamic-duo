@@ -8,8 +8,8 @@
             font-size: 34px;
             font-family: Georgia, Times, serif;
             background: lightYellow;
-            border: thin solid gold;
-            margin: 10px;
+            /*border: thin solid gold;
+            margin: 10px;*/
         }
         text {
             filter: url(#shine);

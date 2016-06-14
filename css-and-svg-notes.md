@@ -1,4 +1,4 @@
-CSS and SVG — The Dynamic Duo!
+CSS & SVG _The Dynamic Duo!_
 ==============================
 
 A presentation by  
@@ -6,9 +6,29 @@ Amelia Bellamy-Royds
 at  
 CSS Day 2016 (Amsterdam, 17 June)
 
+<!--<link href='https://fonts.googleapis.com/css?family=Pacifico|Fugaz+One' rel='stylesheet' type='text/css'>-->
 <style>
-figure, figure > object, figure > img {max-height: 90vh;}
+body {
+  font-family: Open Sans, sans-serif;
+}
+h1, h2, h3 {
+  font-family: "Fugaz One", Arial Black, sans-serif;
+}
+h1, h2 {
+  text-transform: uppercase;
+  text-align: center;
+}
+h1 em, h2 em, h3 em {
+  display: block;
+  font-family: Pacifico, Magneto, Script MT, cursive;
+  text-transform: none;
+}
+
 figure > object, figure > img {width: 100%; min-height: 200px;}
+figure, figure > object, figure > img {max-height: 90vh;}
+figure {padding: 0; box-sizing: content-box;}
+object, img {margin: 0; box-sizing: border-box;}
+
 
 @supports (resize: both) {
   .resizer {
@@ -34,9 +54,9 @@ figure > object, figure > img {width: 100%; min-height: 200px;}
 </style>
 
 
-## The Origin Story
+## CSS & SVG _Origins_
 
-### CSS and HTML
+### CSS & HTML
 
 In the beginning, there was HTML.
 
@@ -53,7 +73,8 @@ So HTML got a sidekick.  HTML got CSS.  Like a helpful squire, CSS took care of 
 But CSS, in this era, was still just a sidekick.  It only focused on helping HTML.  HTML was all about text, so CSS was all about styling text.  Sure, CSS showed up briefly in a dead-end story line involving XML on the web, but it really didn't involve any character development for CSS.  CSS was still all about styling text documents. 
 
 <figure>
-<object type="text/html" data="demos-figures/html-css-origins.html"></object>
+<object type="text/html" data="demos-figures/html-css-origins.html"
+        style="height: 80vh; min-height: 300px;"></object>
 </figure>
 
 ### Enter SVG
@@ -79,6 +100,10 @@ SVG had also invested a lot of time adapting to tiny mobile devices, only to hav
 
 But CSS, CSS was still on the web.  CSS still had its old pal HTML.  The web isn't the web without HTML.  But HTML and the web, they needed a new look and some new moves to compete against smartphone apps.  And CSS had discovered all sorts of new styles from SVG.
 
+<figure>
+<img src="demos-figures/svg-shield.svg">
+</figure>
+
 
 ### CSS does Graphics
 
@@ -98,8 +123,13 @@ It has not been easy.  Harmonizing SVG and CSS effects has resulted in a lot of 
 
 But it's happening.  The bugs are getting squashed.  The gaps are getting filled.  SVG and CSS are moving forward, together.  The Dynamic Duo, bringing easier interactive graphics to the web.
 
+<figure>
+<img src="demos-figures/svg-shield.svg" style="max-width: 45%; transform: rotate(10deg)">
+<img src="demos-figures/css-shield.svg" style="max-width: 45%; transform: rotate(-10deg)">
+</figure>
 
-## What Can the Dynamic Duo Do For You?
+
+## What Can the _Dynamic Duo_ Do For You?
 
 Enough story time.  You're here to learn.  What you want to know, is: What can the dynamic duo do for _you_?
 
@@ -159,12 +189,12 @@ What can CSS do that SVG can't do alone?
   Still pretty new, but definitely extra-awesome.  CSS variables are going to be extra powerful in SVG because of how style inheritance works in SVG's `<use>` elements.
 
 
-### SVG+CSS Synergy
+### SVG & CSS Synergy
 
 And then there are tricks that SVG taught to CSS, which CSS is making even better:
-<img style="float: right; max-width: 30%; max-height: 40vh;" 
+<img style="float: right; max-width: 30%; max-height: 50vh; transform: rotate(-10deg)" 
      src="demos-figures/svg-shield.svg" />
-<img style="float: right; max-width: 35%; max-height: 30vh; margin-top: 20vh; margin-right: -20%" 
+<img style="float: right; max-width: 35%; max-height: 35vh; margin-top: 20vh; margin-right: -15%; transform: rotate(10deg)" 
      src="demos-figures/css-shield.svg" />
 
 - Transforms.
@@ -212,12 +242,21 @@ And if all that is not enough, you need to think about _how_ do you SVG?  Becaus
 
 ## All SVG Are Not Alike
 
-There are three ways to SVG on the web:
+There are three ways to include SVG on the web.  Some CSS+SVG tricks only work with SVG served certain ways.
 
-- SVG as image.  A separate file, or maybe a data URI, that you use the same as you would any other image file:
+### SVG as image
 
-  - `<img src="logo.svg" alt="SVG Logo" />`  
-  - `background-image: url(logo.svg);`
+SVG in a separate file, or maybe a data URI, that you use the same as you would any other image file.  In code, it looks like:
+
+```html
+<img src="logo.svg" alt="SVG Logo" />
+```
+```css
+background-image: url(logo.svg);
+```
+  
+What does that mean?
+
   - No scripting!
   - No interaction!
   - No external stylesheets or images!
@@ -228,11 +267,18 @@ There are three ways to SVG on the web:
   - `@keyframes` and `<animate>` _should_ work
   - SVG text not accessible: use `alt`
   
-- SVG as embedded object.  A separate file, or maybe a data URI, embedded as an independent, interactive document.
+### SVG as embedded object
 
-  - `<object data="chart.svg" type="image/svg+xml">fallback content</object>`
-  - `<iframe src="chart.svg" >fallback content</iframe>`
-  - `<embed src="chart.svg" type="image/svg+xml" />`
+SVG in aseparate file, or maybe a data URI, embedded as an independent, interactive document.  Your HTML code looks like:
+
+```html
+<object data="chart.svg" type="image/svg+xml">fallback content</object>
+<iframe src="chart.svg" >fallback content</iframe>
+<embed src="chart.svg" type="image/svg+xml" />
+```
+
+What does this mean?
+
   - Scripting OK, _separate_ DOM
   - Interaction OK, events don't bubble out
   - Animation OK
@@ -242,10 +288,19 @@ There are three ways to SVG on the web:
   - `:target` and SVG views work
   - SVG text _should_ be accessible
   
-- Inline SVG.  SVG elements as children of your HTML elements, whether defined via markup or created via script.
+### Inline SVG
 
-  - `<figure><svg viewBox="0 0 100 100"><path ... /></svg></figure>`
-  - `document.body.insertBefore( document.createElementNS(svgNS, "svg") );`
+SVG elements as children of your HTML elements, whether defined via markup or created via script, like:
+
+```html
+<figure><svg viewBox="0 0 100 100"><path ... /></svg></figure>
+```
+```javascript
+document.body.insertBefore( document.createElementNS(svgNS, "svg") );
+```
+
+The effect:
+
   - Scripting OK, _same_ DOM
   - Interaction OK, events bubble up
   - Animation OK
@@ -254,11 +309,9 @@ There are three ways to SVG on the web:
   - `:target` based on main URL
   - No SVG views
   - Accessible SVG text
-  
-Some of the examples I'll show only work with SVG served certain ways.
 
 
-## SVG and CSS in the Real World
+## _Real World_ CSS & SVG 
 
 What problems have the Dynamic Duo solved?  
 
@@ -275,7 +328,7 @@ I created these icons for a [blog on CSS Variables](http://codepen.io/AmeliaBR/p
 
 Of course, `currentColor` can also be used for its original purpose, [to coordinate color properties with the color of the surrounding text](http://oreillymedia.github.io/SVG_Text_Layout/ch03-fill-stroke-files/currentColor-icon.html).
 
-<figure>
+<figure aria-label="Current Color demo">
 <object type="text/html" data="demos-figures/currentColor-icon.html"></object>
 </figure>
 
@@ -286,7 +339,8 @@ Once you have one icon with multiple styles, it is easy to switch it up interact
 This demo is from [the book I'm currently working on](http://shop.oreilly.com/product/0636920037972.do), and uses the new HTML form validation pseudo-classes to control the styles on an inline SVG.  If the form's invalid, the stoplight is red.  If everything's OK, it's green.  And if the browser doesn't support the new pseudo-classes, the light is forever yellow. 
 
 <figure>
-<object type="text/html" data="demos-figures/form-validation.html"></object>
+<object type="text/html" data="demos-figures/form-validation.html"
+        style="min-height: 350px; max-height: 90vh"></object>
 </figure>
 
 ### Hero Text Headings.
@@ -323,7 +377,7 @@ This demo was created by Dudley Storey [as part of a series of blog posts on the
 <object type="image/svg+xml" data="demos-figures/responsive-imagemap.svg"></object>
 </figure>
 
-### Responsive Maps and Charts
+### Responsive Maps & Charts
 
 Scaling an image to fit small screens can make text and thin strokes impossible to read.  Media queries come to the rescue: When the SVG is small, scale the font-size and stroke-width _up_ to compensate for the scaling effect.
 
@@ -350,7 +404,7 @@ There are many examples available, here is a very simple one I created using the
 </div></figure>
 
 
-## The Legend Continues
+## The Legend _Continues…_
 
 There are still lots of obstacles to overcome.  There are bugs in browser implementations, there are bugs in the specs, there are browsers that haven't implemented specs yet, and there are specs that haven't been written yet.
 
@@ -370,7 +424,7 @@ Some new SVG+CSS adventures that should be possible in the next few years:
 
 I can't promise which will come first, but all are being discussed or worked on now.  If something really excites you, please let browser developers & spec editors know!
 
-## About Me
+## _About Me_
 
 Amelia Bellamy-Royds
 
