@@ -269,7 +269,7 @@ What does that mean?
   
 ### SVG as embedded object
 
-SVG in aseparate file, or maybe a data URI, embedded as an independent, interactive document.  Your HTML code looks like:
+SVG in a separate file, or maybe a data URI, embedded as an independent, interactive document.  Your HTML code looks like:
 
 ```html
 <object data="chart.svg" type="image/svg+xml">fallback content</object>
@@ -361,7 +361,7 @@ Text shadow is pretty cool, but there's only so much you can do with it.  SVG fi
 <object type="image/svg+xml" data="demos-figures/char-vs-glyph.svg"></object>
 </figure>
 
-SVG filters are also great for manipulation of photographic images.  The latest browsers support SVG filters on CSS-styled HTML images, but for widest support you can use the SVG `<image>` element.  This demo is from a [blog post I wrote on the colorizing grayscale images with filters](https://css-tricks.com/color-filters-can-turn-your-gray-skies-blue/):
+SVG filters are also great for manipulation of photographic images.  The latest browsers support SVG filters on CSS-styled HTML images, but for widest support you can use the SVG `<image>` element.  This demo is from a [blog post I wrote on colorizing grayscale images with filters](https://css-tricks.com/color-filters-can-turn-your-gray-skies-blue/):
 
 <figure>
 <object type="image/svg+xml" data="demos-figures/tinted-image.svg"></object>
