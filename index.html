@@ -4,8 +4,12 @@
   <title>CSS and SVG: The Dynamic Duo! A presentation by Amelia Bellamy-Royds</title>
 <!--<link href='https://fonts.googleapis.com/css?family=Pacifico|Fugaz+One' rel='stylesheet' type='text/css'>-->
 <style type="text/css">
+  /* core typography styles */
 body {
   font-family: Open Sans, sans-serif;
+  line-height: 1.4;
+  scroll-snap-type: proximity;
+  scroll-snap-padding: 2vh 2vw;
 }
 h1, h2, h3 {
   font-family: "Fugaz One", "Arial Black", sans-serif;
@@ -13,6 +17,7 @@ h1, h2, h3 {
 h1, h2 {
   text-transform: uppercase;
   text-align: center;
+  margin-top: 2em;
 }
 h1 em, h2 em, h3 em {
   display: block;
@@ -22,12 +27,31 @@ h1 em, h2 em, h3 em {
 header {
   text-align: right;
 }
+@media not print {
+  body {
+    background-color: #302;
+    padding: 0.3em;
+  }
+  main {
+    background-color: blanchedAlmond;
+    margin: 1em auto;
+    padding: 0.3em;
+    max-width: 40em;
+    box-shadow: 0.5em 0.5em 0.3em rgba(0,0,0,0.5);
+    border: #ffa 2px;
+    border-radius: 5px;
+    border-style: solid none none solid;
+  }
+}
+@media not print and (min-width: 25rem) {
+  main {padding: 0.5em 1em;}
+}
 
+  /* embedded demos */
 figure > object, figure > img {width: 100%; min-height: 200px;}
 figure, figure > object, figure > img {max-height: 90vh;}
 figure {padding: 0; box-sizing: content-box;}
 object, img {margin: 0; box-sizing: border-box;}
-
 
 @supports (resize: both) {
   @media not print {
@@ -52,6 +76,8 @@ object, img {margin: 0; box-sizing: border-box;}
     }
   }
 }
+  
+  /* slides/article view switch */
   .switch {
     position: absolute;
     left: -100%;
@@ -76,29 +102,45 @@ object, img {margin: 0; box-sizing: border-box;}
     width: 1em;
     height: 1em;
   }
-  #view-slides:focus  ~ [for="view-slides" ] {
+  #view-slides:focus  ~ [for="view-slides" ],
+  #tab-reveal:focus  ~ [for="tab-reveal" ]{
     outline: dashed medium royalBlue;
   }
   #view-slides:checked  ~ [for="view-slides" ] {
     background-color: mediumSpringGreen;
     box-shadow: 2px 2px 1px rgba(0,0,0,0.4);
   }
-  .switch-label:active {
-    box-shadow: 1px 1px 0px rgba(0,0,0,0.5) !important;
-  }
   #view-slides:checked  ~ [for="view-slides" ]::before {
     content: "✔ ";
     color: seaGreen;
   }
-  @media print {
-    .switch-label, .switch {display: none;}
+  .switch-label:active {
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.5) !important;
+  }
+  
+  /* slide view */
+  #view-slides:checked ~ main {
+    /* remove styles on article as a whole */
+    background: transparent;
+    padding: 0;
+    max-width: none;
+    box-shadow: none;
+    border-style: none;
   }
   #view-slides:checked ~ main .slide {
-    /* format as a slide */
+    /* add styles for individual slides */
     display: block;
-    border: solid gray;
-    margin: 0.5em;
-    padding: 0.5em;
+    box-sizing: border-box;
+    width: calc(96vw - 20px);
+    max-width: 40em;
+    min-height: 96vh;
+    padding: 1em;
+    border-radius: 1em;
+    margin: 2vh auto;
+    box-shadow: 0.2em 0.3em 0.5em 0 black;
+    background-color: blanchedAlmond;
+    background-image: radial-gradient(circle farthest-side, transparent 70%, plum);
+    scroll-snap-align: start;
   }
   #view-slides:checked ~ main .hide-in-slides {
     display: none;
@@ -106,11 +148,50 @@ object, img {margin: 0; box-sizing: border-box;}
   #view-slides:not(:checked) ~ main .only-in-slides {
     display: none;
   } 
+  [hidden] {
+    display: none;
+  }
+</style>
+<style id="interactive-styles" media="only none" >
+    section :focus ~ li, section :focus ~ ul, section :focus ~ ol, 
+    section .contains-focus ~ li, section .contains-focus ~ ul, section .contains-focus ~ ol {
+        opacity: 0.05;
+    }
+    section li ul, section li ol {
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: opacity 0.5s;
+    }
+    li:focus ul, .contains-focus > ul,
+    li:focus ol, .contains-focus > ol {
+        height: auto;
+        opacity: 1;
+    }
+</style>
+<style media="print">
+    .slide {
+        break-inside: auto;
+    }
+    a:link, a:visited {
+       color: inherit;
+       text-decoration: none;
+    }
+    a:link::after {
+        content: " (" attr(href) ")";
+    }
+    a.literal::after {
+        content: normal;
+    }
+    h2 br, h3 br {display: none;}
+    .switch, .switch-label {display: none;}
 </style>
 </head>
 <body>
-<input class="switch" id="view-slides" type="checkbox" name="view" value="slides" />
+<input class="switch" id="view-slides" type="checkbox" name="view" />
 <label class="switch-label" for="view-slides">View as Slides</label>
+<input hidden class="switch tab-controls" id="tab-reveal" type="checkbox" name="tab" />
+<label hidden class="switch-label tab-controls" for="tab-reveal">Tab to Reveal</label>
 <main>
   <header class="slide">
      <h1 id="css-svg-_the-dynamic-duo-_">CSS &amp; SVG <em>The Dynamic Duo!</em></h1>
@@ -483,5 +564,93 @@ A graphics language for the web.</p>
 </ul>
 </footer>
 </main>
+    <script>
+(function(){
+    var initialized = false;  
+    var interactiveStyles = document.getElementById("interactive-styles");
+    var controlsSelector = ".tab-controls",
+        headingSelector = ".slide", 
+        pointsSelector = ".slide > ul > li, .slide > ol > li";
+    
+    function addTabIndex(selector) {
+        var points = document.querySelectorAll(selector);
+        for (var i=0, n=points.length; i<n; i++) {
+            points[i].setAttribute("tabIndex", 0);
+        }
+        return points;
+    }
+    function removeTabIndex(selector) {        
+        var points = document.querySelectorAll(selector);
+        for (var i=0, n=points.length; i<n; i++) {
+            points[i].removeAttribute("tabIndex");
+        }
+        return points;
+    }
+    
+    //add tabIndex to headings
+    //scroll slide into place whenever heading gets focus
+    var headings = addTabIndex(headingSelector);
+    for (var i=0, n=headings.length; i<n; i++){
+        headings[i].addEventListener("focus", scrollSlide);
+    }
+    
+    function toggleTabControl(e){
+        
+        if (!e.target.checked){
+            interactiveStyles.setAttribute("disabled", "disabled");
+            interactiveStyles.setAttribute("media", "only none"); 
+                //because "disabled" doesn't work!
+            document.body.insertBefore(interactiveStyles, null); //force refresh
+            
+            //remove tabIndex from points
+            removeTabIndex(pointsSelector);
+            return;
+        }
+        
+        //add tabIndex to bullet points
+        addTabIndex(pointsSelector);
+        
+        if (!initialized) {
+
+            //ensure that focusing links doesn't mess up focus styles
+            var links = document.getElementsByTagName("a");
+            for (var i=0, n=links.length; i<n; i++) {
+                links[i].addEventListener("focus", focusIn);
+                links[i].addEventListener("blur", focusOut);
+            }
+            initialized = true;
+        }
+        
+        interactiveStyles.removeAttribute("disabled");
+        interactiveStyles.setAttribute("media", "screen");
+        document.body.insertBefore(interactiveStyles, null); //force refresh
+    }
+    function focusIn(e){
+        var p = e.target.parentElement;
+        while ((p.tagName.toLowerCase() != "section") && 
+               (p != document.documentElement)) {
+            p.classList.add("contains-focus");
+            p = p.parentElement;
+        }
+    }
+    function focusOut(e){
+        var p = e.target.parentElement;
+        while ((p.tagName.toLowerCase() != "section") && 
+               (p != document.documentElement)) {
+            p.classList.remove("contains-focus");
+            p = p.parentElement;
+        }
+    }
+    function scrollSlide(e){
+        scrollTo(window.scrollX, e.target.parentElement.offsetTop - 10);
+    }
+    
+    var tabControls = document.querySelectorAll(controlsSelector);
+    for (var i=0, n=tabControls.length; i<n; i++) {
+      tabControls[i].removeAttribute("hidden");
+      tabControls[i].addEventListener("change", toggleTabControl)
+    }
+})();
+    </script>
     
 </body></html>
