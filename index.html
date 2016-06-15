@@ -102,15 +102,17 @@ object, img {margin: 0; box-sizing: border-box;}
     width: 1em;
     height: 1em;
   }
-  #view-slides:focus  ~ [for="view-slides" ],
-  #tab-reveal:focus  ~ [for="tab-reveal" ]{
+  #view-slides:focus  ~ [for="view-slides"],
+  #tab-reveal:focus  ~ [for="tab-reveal"] {
     outline: dashed medium royalBlue;
   }
-  #view-slides:checked  ~ [for="view-slides" ] {
+  #view-slides:checked  ~ [for="view-slides"],
+  #tab-reveal:checked  ~ [for="tab-reveal"] {
     background-color: mediumSpringGreen;
     box-shadow: 2px 2px 1px rgba(0,0,0,0.4);
   }
-  #view-slides:checked  ~ [for="view-slides" ]::before {
+  #view-slides:checked  ~ [for="view-slides"]::before,
+  #tab-reveal:checked  ~ [for="tab-reveal"]::before {
     content: "✔ ";
     color: seaGreen;
   }
@@ -569,7 +571,7 @@ A graphics language for the web.</p>
     var initialized = false;  
     var interactiveStyles = document.getElementById("interactive-styles");
     var controlsSelector = ".tab-controls",
-        headingSelector = ".slide", 
+        slideSelector = ".slide", 
         pointsSelector = ".slide > ul > li, .slide > ol > li";
     
     function addTabIndex(selector) {
@@ -587,11 +589,11 @@ A graphics language for the web.</p>
         return points;
     }
     
-    //add tabIndex to headings
+    //add tabIndex to slides
     //scroll slide into place whenever heading gets focus
-    var headings = addTabIndex(headingSelector);
-    for (var i=0, n=headings.length; i<n; i++){
-        headings[i].addEventListener("focus", scrollSlide);
+    var slides = addTabIndex(slideSelector);
+    for (var i=0, n=slides.length; i<n; i++){
+        slides[i].addEventListener("focus", scrollSlide);
     }
     
     function toggleTabControl(e){
@@ -627,22 +629,22 @@ A graphics language for the web.</p>
     }
     function focusIn(e){
         var p = e.target.parentElement;
-        while ((p.tagName.toLowerCase() != "section") && 
+        p.classList.add("contains-focus");
+        while ((!p.matches("slideSelector")) && 
                (p != document.documentElement)) {
-            p.classList.add("contains-focus");
             p = p.parentElement;
         }
     }
     function focusOut(e){
         var p = e.target.parentElement;
-        while ((p.tagName.toLowerCase() != "section") && 
+        p.classList.remove("contains-focus");
+        while ((!p.matches("slideSelector")) && 
                (p != document.documentElement)) {
-            p.classList.remove("contains-focus");
             p = p.parentElement;
         }
     }
     function scrollSlide(e){
-        scrollTo(window.scrollX, e.target.parentElement.offsetTop - 10);
+        scrollTo(window.scrollX, e.target.offsetTop - 10);
     }
     
     var tabControls = document.querySelectorAll(controlsSelector);
