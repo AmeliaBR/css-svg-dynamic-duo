@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
     #scene-switcher {
       text-align: center;
       max-width: 100%;
@@ -144,7 +148,6 @@
       /* Frame 1 */
       [name=keyframe]:nth-of-type(1):checked ~ #graphic 
         #http { 
-          display: none; 
           opacity: 0; 
           transform: translate(-50px,95px) scale(0.7);
       }
@@ -158,13 +161,13 @@
       /* base position */
       [name=keyframe]:nth-of-type(n+1):checked ~ #graphic 
         #tags text { 
-          display: none;
+          opacity: 0;
           transform: translate(0,-75px) rotate(0deg);
       } 
       /* font */
       [name=keyframe]:nth-of-type(n+3):checked ~ #graphic 
         #tags text:nth-child(1) { 
-          display: block;
+          opacity: 1;
           transform: translate(-25px, 10px) rotate(-30deg);
       }
       [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
@@ -174,7 +177,7 @@
       /* center */ 
       [name=keyframe]:nth-of-type(n+4):checked ~ #graphic 
         #tags text:nth-child(2) { 
-          display: block;
+          opacity: 1;
           transform: translate(0px, -2px) rotate(2deg);
       }
       [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
@@ -184,7 +187,7 @@
       /* big */
       [name=keyframe]:nth-of-type(n+5):checked ~ #graphic 
         #tags text:nth-child(3) { 
-          display: block;
+          opacity: 1;
           transform: translate(30px, 5px) rotate(35deg);
       }
       [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
@@ -194,7 +197,7 @@
       /* small */
       [name=keyframe]:nth-of-type(n+5):checked ~ #graphic 
         #tags text:nth-child(4) { 
-          display: block;
+          opacity: 1;
           transform: translate(35px, -12px) rotate(-10deg);
       }
       [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
@@ -204,7 +207,7 @@
       /* blink */ 
       [name=keyframe]:nth-of-type(n+6):checked ~ #graphic 
         #tags text:nth-child(5) { 
-          display: block;
+          opacity: 1;
           transform: translate(-5px, -10px) rotate(-2deg);
       }
       [name=keyframe]:nth-of-type(n+8):checked ~ #graphic 
@@ -216,7 +219,7 @@
       /* CSS */
       [name=keyframe]:nth-of-type(-n+6):checked ~ #graphic 
         #css  { 
-          display: none;
+          opacity: 0;
           transform: translate(100px, 20px) rotate(10deg);
       }
       [name=keyframe]:nth-of-type(n+7):checked ~ #graphic 

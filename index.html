@@ -24,7 +24,7 @@ h1 em, h2 em, h3 em {
   font-family: Pacifico, Magneto, "Script MT", cursive;
   text-transform: none;
 }
-header {
+header p {
   text-align: right;
 }
 @media not print {
@@ -42,15 +42,35 @@ header {
     border-radius: 5px;
     border-style: solid none none solid;
   }
+  pre {
+    background: hsla(0,0%,100%,0.7);
+    color: #446;
+    padding: 0.5em;
+    margin: 0.2em;
+    white-space: pre-wrap;
+  }
+  :not(a):focus {
+      outline: none;
+      border-right: solid #302;
+  }
+  :link { color: #446;}
 }
 @media not print and (min-width: 25rem) {
   main {padding: 0.5em 1em;}
 }
 
   /* embedded demos */
-figure > object, figure > img {width: 100%; min-height: 200px;}
-figure, figure > object, figure > img {max-height: 90vh;}
-figure {padding: 0; box-sizing: content-box;}
+figure > object, figure > img {
+  width: 100%; 
+  height: 100%;
+}
+figure {
+  padding: 0; 
+  margin: 0; 
+  min-height: 200px;
+  max-height: 96vh; 
+  overflow: hidden;
+}
 object, img {margin: 0; box-sizing: border-box;}
 
 @supports (resize: both) {
@@ -63,8 +83,8 @@ object, img {margin: 0; box-sizing: border-box;}
       height: 150px;
     }
     .resizer.small {
-      width: 50px;
-      height: 50px;
+      width: 75px;
+      height: 75px;
     }
     .resizer > object {
       display: block;
@@ -77,7 +97,10 @@ object, img {margin: 0; box-sizing: border-box;}
   }
 }
   
-  /* slides/article view switch */
+  /* slides/article view + tab mode toggle buttons */
+  [hidden] {
+    display: none;
+  }
   .switch {
     position: absolute;
     left: -100%;
@@ -128,21 +151,47 @@ object, img {margin: 0; box-sizing: border-box;}
     max-width: none;
     box-shadow: none;
     border-style: none;
+    font-size: 150%;
   }
   #view-slides:checked ~ main .slide {
     /* add styles for individual slides */
     display: block;
+    position: relative;
+    scroll-snap-align: start;
+    
+    overflow: auto;
     box-sizing: border-box;
-    width: calc(96vw - 20px);
+    width: 96vw;
     max-width: 40em;
-    min-height: 96vh;
+    height: 96vh;
     padding: 1em;
     border-radius: 1em;
     margin: 2vh auto;
+    
     box-shadow: 0.2em 0.3em 0.5em 0 black;
     background-color: blanchedAlmond;
     background-image: radial-gradient(circle farthest-side, transparent 70%, plum);
-    scroll-snap-align: start;
+    color:  #302;
+  }
+  #view-slides:checked ~ main .slide > figure {
+    position: absolute;
+    top: 4em;
+    left: 1em;
+    height: calc(100% - 5em);
+    width:  calc(100% - 2em);
+  }
+  #view-slides:checked ~ main .slide > h3 {
+    margin-top: 0.5em;
+  }
+  #view-slides:checked ~ main :not(header):not(footer).slide > p {
+    text-align: center;
+    font-family: Pacifico, Magneto, "Script MT", cursive;
+    margin-top: 0.5em;
+    letter-spacing: 0.25ch;
+  }
+  #view-slides:checked ~ main .slide > p code {letter-spacing: normal;}
+  #view-slides:checked ~ main li > p {
+    margin: 0.3em 0;
   }
   #view-slides:checked ~ main .hide-in-slides {
     display: none;
@@ -150,25 +199,34 @@ object, img {margin: 0; box-sizing: border-box;}
   #view-slides:not(:checked) ~ main .only-in-slides {
     display: none;
   } 
-  [hidden] {
-    display: none;
+  @media (min-width: 30em) {
+      #view-slides:checked ~ main {
+          font-size: 150%;
+      }
+      #view-slides:checked ~ main li li {
+          font-size: 80%;
+      }
+      #view-slides:checked ~ main .slide {
+          padding: 1em 2em;
+      }
   }
+  @media (min-width: 50em) AND (min-height: 40em) {
+      #view-slides:checked ~ main {
+          font-size: 200%;
+      }
+      #view-slides:checked ~ main .slide {
+          padding: 1em 3em;
+      }
+  }
+  
+  
+  
 </style>
 <style id="interactive-styles" media="only none" >
-    section :focus ~ li, section :focus ~ ul, section :focus ~ ol, 
-    section .contains-focus ~ li, section .contains-focus ~ ul, section .contains-focus ~ ol {
+    .slide:focus .point,
+    :focus ~ .point,
+    .contains-focus ~ .point, .contains-focus ~ ul .point, .contains-focus ~ ol .point {
         opacity: 0.05;
-    }
-    section li ul, section li ol {
-        height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: opacity 0.5s;
-    }
-    li:focus ul, .contains-focus > ul,
-    li:focus ol, .contains-focus > ol {
-        height: auto;
-        opacity: 1;
     }
 </style>
 <style media="print">
@@ -187,6 +245,7 @@ object, img {margin: 0; box-sizing: border-box;}
     }
     h2 br, h3 br {display: none;}
     .switch, .switch-label {display: none;}
+    
 </style>
 </head>
 <body>
@@ -319,8 +378,8 @@ A graphics language for the web.</p>
   <section class="slide">
 <h3 id="svg-css-synergy">SVG &amp; CSS Synergy</h3>
 <p class="hide-in-slides">And then there are tricks that SVG taught to CSS, which CSS is making even better:</p>
-<img style="float: right; max-width: 30%; max-height: 50vh; transform: rotate(-10deg)" src="demos-figures/svg-shield.svg">
-<img style="float: right; max-width: 35%; max-height: 35vh; margin-top: 20vh; margin-right: -15%; transform: rotate(10deg)" src="demos-figures/css-shield.svg">
+<img style="float: right; max-width: 25%; max-height: 50vh; transform: rotate(-10deg); shape-outside: content-box" src="demos-figures/svg-shield.svg">
+<img style="float: right; max-width: 35%; max-height: 35vh; margin-top: 20vh; margin-right: -15vmin; transform: rotate(10deg); shape-outside: content-box" src="demos-figures/css-shield.svg">
 <ul>
 <li><p>Transforms.
 <span class="hide-in-slides">2D Transformations have been a fundamental part of SVG layout from the beginning.  CSS extends that syntax with some new shorthands, units and percentages, and 3D transformations to take it to a whole new dimension.</span></p>
@@ -371,14 +430,21 @@ A graphics language for the web.</p>
 <h2 id="all-svg-are-not-alike">All SVG Are Not Alike</h2>
     <p><span class="hide-in-slides">There are three</span><span class="only-in-slides">3</span> ways to include SVG on the web.  <span class="hide-in-slides">Some CSS+SVG tricks only work with SVG served certain ways.</span></p>
   </div>
-  <section class="slide">
+  <section>
+    <div class="slide">
 <h3 id="svg-as-image">SVG as image</h3>
 <p class="hide-in-slides">SVG in a separate file, or maybe a data URI, that you use the same as you would any other image file.  In code, it looks like:</p>
 <pre><code class="lang-html">&lt;img src="logo.svg" alt="SVG Logo" /&gt;
 </code></pre>
+<pre><code class="lang-html">&lt;picture&gt;
+  &lt;source srcset="logo.svg" format="image/svg+xml" /&gt;
+  &lt;img src="logo.png" alt="Robust Logo" /&gt;
+&lt;/picture&gt;</code></pre>
 <pre><code class="lang-css">background-image: url(logo.svg);
 </code></pre>
-<p class="hide-in-slides">What does that mean?</p>
+    </div>
+    <div class="slide">
+<p>Features of SVG images:</p>
 <ul>
 <li>No scripting!</li>
 <li>No interaction!</li>
@@ -390,15 +456,19 @@ A graphics language for the web.</p>
 <li><code>@keyframes</code> and <code>&lt;animate&gt;</code> <em>should</em> work</li>
 <li>SVG text not accessible: use <code>alt</code></li>
 </ul>
+    </div>
   </section>
-  <section class="slide">
+  <section>
+    <div class="slide">
 <h3 id="svg-as-embedded-object">SVG as embedded object</h3>
 <p class="hide-in-slides">SVG in a separate file, or maybe a data URI, embedded as an independent, interactive document.  Your HTML code looks like:</p>
-<pre><code class="lang-html">&lt;object data="chart.svg" type="image/svg+xml"&gt;fallback content&lt;/object&gt;
-&lt;iframe src="chart.svg" &gt;fallback content&lt;/iframe&gt;
-&lt;embed src="chart.svg" type="image/svg+xml" /&gt;
+<pre><code class="lang-html">&lt;object data="chart.svg" type="image/svg+xml"&gt;fallback content&lt;/object&gt;</code></pre>
+<pre><code class="lang-html">&lt;iframe src="chart.svg" &gt;fallback content&lt;/iframe&gt;</code></pre>
+<pre><code class="lang-html">&lt;embed src="chart.svg" type="image/svg+xml" /&gt;
 </code></pre>
-<p class="hide-in-slides">What does this mean?</p>
+    </div>
+    <div class="slide">
+<p>Features of embedded SVG documents:</p>
 <ul>
 <li>Scripting OK, <em>separate</em> DOM</li>
 <li>Interaction OK, events don't bubble out</li>
@@ -409,15 +479,19 @@ A graphics language for the web.</p>
 <li><code>:target</code> and SVG views work</li>
 <li>SVG text <em>should</em> be accessible</li>
 </ul>
+    </div>
   </section>
-  <section class="slide">
+  <section>
+    <div class="slide">
 <h3 id="inline-svg">Inline SVG</h3>
 <p class="hide-in-slides">SVG elements as children of your HTML elements, whether defined via markup or created via script, like:</p>
 <pre><code class="lang-html">&lt;figure&gt;&lt;svg viewBox="0 0 100 100"&gt;&lt;path ... /&gt;&lt;/svg&gt;&lt;/figure&gt;
 </code></pre>
 <pre><code class="lang-javascript">document.body.insertBefore( document.createElementNS(svgNS, "svg") );
 </code></pre>
-<p class="hide-in-slides">The effect:</p>
+    </div>
+    <div class="slide">
+<p>Features of inline SVG:</p>
 <ul>
 <li>Scripting OK, <em>same</em> DOM</li>
 <li>Interaction OK, events bubble up</li>
@@ -428,6 +502,7 @@ A graphics language for the web.</p>
 <li>No SVG views</li>
 <li>Accessible SVG text</li>
 </ul>
+    </div>
   </section>
 </section>
 <section>
@@ -443,8 +518,8 @@ A graphics language for the web.</p>
 <p>I created these icons for a <a href="http://codepen.io/AmeliaBR/post/customizable-svg-icons-css-variables" title="http://codepen.io/AmeliaBR/post/customizable-svg-icons-css-variables">blog on CSS Variables</a>.  This <a href="http://codepen.io/AmeliaBR/pen/hKGIt?editors=1100" title="http://codepen.io/AmeliaBR/pen/hKGIt?editors=1100">first set</a> uses inherited SVG-CSS properties plus <code>currentColor</code> for the icon, and standard CSS box-model styling on the <code>&lt;svg&gt;</code>.  The <a href="http://codepen.io/AmeliaBR/pen/fsamq?editors=1100" title="http://codepen.io/AmeliaBR/pen/fsamq?editors=1100">second set</a> shows the increased style variety possible with custom CSS variables.</p>
       </div>
 <figure>
-<object type="text/html" data="demos-figures/themed-icons-basic.html"></object>
-<object type="text/html" data="demos-figures/themed-icons-variables.html"></object>
+<object style="max-height: 50%;" type="text/html" data="demos-figures/themed-icons-basic.html"></object>
+<object style="max-height: 50%;" type="text/html" data="demos-figures/themed-icons-variables.html"></object>
 </figure>
     </div>
     <div class="slide">
@@ -461,11 +536,11 @@ A graphics language for the web.</p>
 <p>This demo is from <a href="http://shop.oreilly.com/product/0636920037972.do" title="http://shop.oreilly.com/product/0636920037972.do">the book I'm currently working on</a>, and uses the new HTML form validation pseudo-classes to control the styles on an inline SVG.  If the form's invalid, the stoplight is red.  If everything's OK, it's green.  And if the browser doesn't support the new pseudo-classes, the light is forever yellow. </p>
     </div>
 <figure>
-<object type="text/html" data="demos-figures/form-validation.html" style="min-height: 350px; max-height: 90vh"></object>
+<object type="text/html" data="demos-figures/form-validation.html" style="min-height: 350px"></object>
 </figure>
   </section>
   <section class="slide">
-<h3 id="hero-text-headings-">Hero Text Headings.</h3>
+<h3 id="hero-text-headings-">Hero Text Headings</h3>
     <div class="hide-in-slides">
 <p>Big, bold, beautiful decorative text, that scales to fit the available space like an image, but stays easily editable like CSS text.  Just don't expect it to wrap to a new line on its own — not yet, anyway!  Use inline SVG or an embedded object to ensure the text is accessible and interactive (for in-page search or copy &amp; paste).  If using SVG-as-image, use <code>alt</code> text and (because of bugs) <code>role="img"</code>.</p>
 <p>This example was originally created by Kurt Cagle, adapted by me for our <a href="http://oreillymedia.github.io/SVG_Colors_Patterns_Gradients/ch11-imagePatterns-files/" title="http://oreillymedia.github.io/SVG_Colors_Patterns_Gradients/ch11-imagePatterns-files/"><em>SVG Text Layout</em> book</a>.  In supporting browsers, it features both SVG pattern-filled text <em>and</em> CSS text-shadow.  Text shadow isn't mentioned anywhere in the SVG specs, but it comes along for the ride thanks to using CSS for basic text styling.  So do the underline and overline effects shown here, using standard CSS <code>text-decoration</code>.</p>
@@ -572,7 +647,7 @@ A graphics language for the web.</p>
     var interactiveStyles = document.getElementById("interactive-styles");
     var controlsSelector = ".tab-controls",
         slideSelector = ".slide", 
-        pointsSelector = ".slide > ul > li, .slide > ol > li";
+        pointsSelector = ".slide > ul > li, .slide > ol > li, .slide > pre";
     
     function addTabIndex(selector) {
         var points = document.querySelectorAll(selector);
@@ -599,49 +674,58 @@ A graphics language for the web.</p>
     function toggleTabControl(e){
         
         if (!e.target.checked){
-            interactiveStyles.setAttribute("disabled", "disabled");
+            interactiveStyles.disabled = true;
             interactiveStyles.setAttribute("media", "only none"); 
-                //because "disabled" doesn't work!
-            document.body.insertBefore(interactiveStyles, null); //force refresh
+                //because "disabled" doesn't always work!
+            document.head.insertBefore(interactiveStyles, null); //force refresh
             
             //remove tabIndex from points
             removeTabIndex(pointsSelector);
+      
+            console.log("Tabbing off");
             return;
         }
         
-        //add tabIndex to bullet points
-        addTabIndex(pointsSelector);
-        
+        //add tabIndex and class to bullet points
         if (!initialized) {
-
-            //ensure that focusing links doesn't mess up focus styles
-            var links = document.getElementsByTagName("a");
-            for (var i=0, n=links.length; i<n; i++) {
-                links[i].addEventListener("focus", focusIn);
-                links[i].addEventListener("blur", focusOut);
-            }
-            initialized = true;
+          var points = document.querySelectorAll(pointsSelector);
+          for (var i=0, n=points.length; i<n; i++) {
+              points[i].setAttribute("tabIndex", 0);
+              points[i].classList.add("point");
+          }
+          //ensure that focusing links doesn't mess up focus styles
+          var links = document.getElementsByTagName("a");
+          for (var i=0, n=links.length; i<n; i++) {
+              links[i].addEventListener("focus", focusIn);
+              links[i].addEventListener("blur", focusOut);
+          }
+          initialized = true;
+        }
+        else { //only need to re-add the tabindex
+          addTabIndex(pointsSelector);
         }
         
         interactiveStyles.removeAttribute("disabled");
         interactiveStyles.setAttribute("media", "screen");
-        document.body.insertBefore(interactiveStyles, null); //force refresh
+        document.head.insertBefore(interactiveStyles, null); //force refresh
+      
+        console.log("Tabbing on");
     }
     function focusIn(e){
-        var p = e.target.parentElement;
-        p.classList.add("contains-focus");
-        while ((!p.matches("slideSelector")) && 
-               (p != document.documentElement)) {
+        var p = e.target;
+        do { console.log(p);
+            p.classList.add("contains-focus");
             p = p.parentElement;
-        }
+        } while ((!p.matches("slideSelector")) && 
+               (p != document.documentElement));
     }
     function focusOut(e){
-        var p = e.target.parentElement;
-        p.classList.remove("contains-focus");
-        while ((!p.matches("slideSelector")) && 
-               (p != document.documentElement)) {
+        var p = e.target;
+        do {
+            p.classList.remove("contains-focus");
             p = p.parentElement;
-        }
+        } while ((!p.matches("slideSelector")) && 
+               (p != document.documentElement));
     }
     function scrollSlide(e){
         scrollTo(window.scrollX, e.target.offsetTop - 10);
@@ -650,7 +734,10 @@ A graphics language for the web.</p>
     var tabControls = document.querySelectorAll(controlsSelector);
     for (var i=0, n=tabControls.length; i<n; i++) {
       tabControls[i].removeAttribute("hidden");
-      tabControls[i].addEventListener("change", toggleTabControl)
+      if (tabControls[i].matches("input")) {
+        tabControls[i].addEventListener("change", toggleTabControl)
+        toggleTabControl({target:tabControls[i]}); /* set initial state */
+      }
     }
 })();
     </script>

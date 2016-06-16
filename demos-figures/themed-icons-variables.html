@@ -4,12 +4,14 @@
   <link rel="canonical" href="http://codepen.io/AmeliaBR/pen/fsamq" />
 
 
-<style class="cp-pen-styles">svg {
+<style class="cp-pen-styles">
+body {text-align: center;}
+svg {
   display:inline-block;
-  height:100px; 
-  width:100px;
+  height:150px; 
+  width:150px;
   margin:10px;
-  border:1px solid;
+  border:2px solid;
   background:#eee;
 }
 svg.raw {
@@ -86,7 +88,7 @@ svg.icon-style-C {
 <svg  xmlns="http://www.w3.org/2000/svg" 
      viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"
      class="raw">
-  <g id="palette">
+  <symbol id="palette" viewBox="0 0 100 100">
   <path style="fill:var(--color_palette, #b84);
                stroke:var(--stroke_palette);
                stroke-width:var(--stroke-width_palette);"
@@ -121,7 +123,8 @@ svg.icon-style-C {
         d="M65,65 
            c-10,0 -15,25 -5,20
            s10,-20 5,-20z"/>
-  </g>
+  </symbol>
+  <use xlink:href="#palette"/>
 </svg>
   
 <svg class="icon-style-A">

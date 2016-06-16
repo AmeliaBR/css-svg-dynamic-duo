@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-     viewBox="0 0 1500 1500" preserveAspectRatio="xMinYMin meet" 
+     viewBox="0 0 1400 850" 
      xml:lang="en">
 <title>Responsive SVG Animated Imagemap (by Dudley Storey)</title>
 <style type="text/css">      
@@ -15,7 +15,7 @@ svg a:focus {
   outline: none;
 }
 </style>
-<g id="Canada" transform="translate(-959.79,0.708441)">
+<g id="Canada" transform="translate(-1040,-100)">
 <a xlink:href="http://www.hellobc.com/" title="British Columbia" accesskey="b">
 <clipPath id="bc-clipper">
 <path id="CA-BC" d="M1010.293,33.086c97.05,28.71,159.422,43.963,209.299,53.508c24.44,4.678,45.831,8.972,47.537,9.541
@@ -40,7 +40,7 @@ c-3.917-7.503-11.064-24.392-15.88-37.533c-4.813-13.143-9.993-26.165-11.504-28.93
 c-2.449-5.249-12.204-22.921-21.677-39.27c-9.474-16.352-18.573-32.141-20.221-35.093c-1.874-3.354-6.965-5.778-13.586-6.471
 L1010.293,33.086z"/>
 </clipPath>
-<image clip-path="url(#bc-clipper)" overflow="visible" width="1200" height="800" xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/lynn-valley.jpg" x="800" y="120">
+<image clip-path="url(#bc-clipper)" width="1200" height="800" xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/lynn-valley.jpg" x="800" y="120">
 </image>
 </a>
 
@@ -85,7 +85,7 @@ c0.564,3.671,4.389,20.738,8.493,37.932c4.109,17.193,7.679,33.079,7.937,35.31c0.2
 c4.266,17.913,7.958,34.39,8.207,36.62c0.248,2.225,3.943,18.707,8.206,36.619c4.265,17.913,7.983,34.734,8.265,37.382
 s2.508,12.34,4.952,21.549C2373.794,878.583,2372.831,884.431,2366.884,881.509z"/>
 </clipPath>
-<image overflow="visible" width="1700" height="1200" xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/barn.jpg" x="1350" y="100" clip-path="url(#sk-clipper)" ></image>
+<image width="1700" height="1200" xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/barn.jpg" x="1350" y="100" clip-path="url(#sk-clipper)" ></image>
 </a>
 </g>
 </svg>

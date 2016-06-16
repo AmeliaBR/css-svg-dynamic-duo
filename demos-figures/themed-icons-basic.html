@@ -4,12 +4,14 @@
   <link rel="canonical" href="http://codepen.io/AmeliaBR/pen/hKGIt?editors=1100" />
 
 
-<style class="cp-pen-styles">svg {
+<style class="cp-pen-styles">
+body {text-align: center;}
+svg {
   display:inline-block;
-  height:100px; 
-  width:100px;
+  height:150px; 
+  width:150px;
   margin:10px;
-  border:1px solid;
+  border:2px solid;
   background:#eee;
 }
 svg.raw {
@@ -59,7 +61,7 @@ svg.icon-style-C {
 <svg  xmlns="http://www.w3.org/2000/svg" 
      viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"
      class="raw">
-  <g id="palette">
+  <symbol id="palette" viewBox="0 0 100 100">
   <path d="M5,90
            C5,45 40,-5 75,10 
            C110,25 80,95 60,95
@@ -87,7 +89,8 @@ svg.icon-style-C {
            c-10,0 -15,25 -5,20
            s10,-20 5,-20z"/>
     </g>
-  </g>
+  </symbol>
+  <use xlink:href="#palette"/>
 </svg>
   
 <svg class="icon-style-A">
