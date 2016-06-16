@@ -11,15 +11,15 @@ body {
   scroll-snap-type: proximity;
   scroll-snap-padding: 2vh 2vw;
 }
-h1, h2, h3 {
+h1, h2, h3, .h {
   font-family: "Fugaz One", "Arial Black", sans-serif;
 }
-h1, h2 {
+h1, h2, .h {
   text-transform: uppercase;
   text-align: center;
   margin-top: 2em;
 }
-h1 em, h2 em, h3 em {
+h1 em, h2 em, h3 em, .h-em  {
   display: block;
   font-family: Pacifico, Magneto, "Script MT", cursive;
   text-transform: none;
@@ -60,7 +60,7 @@ header p {
 }
 
   /* embedded demos */
-figure > object, figure > img {
+figure > object, figure > img, figure > svg {
   width: 100%; 
   height: 100%;
 }
@@ -68,10 +68,23 @@ figure {
   padding: 0; 
   margin: 0; 
   min-height: 200px;
-  max-height: 96vh; 
+  height: 96vh; 
   overflow: hidden;
 }
 object, img {margin: 0; box-sizing: border-box;}
+  
+/* inline SVG text */
+svg {overflow: visible;}
+li svg {
+  display: inline-block;
+  height:1em; 
+  width: 95%; 
+  max-width: 12em;
+  vertical-align: baseline;
+  fill: currentColor;
+  font-family: "Fugaz One", "Arial Black", sans-serif;
+  font-size: 150%;
+}
 
 @supports (resize: both) {
   @media not print {
@@ -183,7 +196,9 @@ object, img {margin: 0; box-sizing: border-box;}
   #view-slides:checked ~ main .slide > h3 {
     margin-top: 0.5em;
   }
-  #view-slides:checked ~ main :not(header):not(footer).slide > p {
+  #view-slides:checked ~ main section .slide > p,
+  #view-slides:checked ~ main section.slide > p {
+    /* non-list paragraphs not in header or footer */
     text-align: center;
     font-family: Pacifico, Magneto, "Script MT", cursive;
     margin-top: 0.5em;
@@ -254,9 +269,47 @@ object, img {margin: 0; box-sizing: border-box;}
 <input hidden class="switch tab-controls" id="tab-reveal" type="checkbox" name="tab" />
 <label hidden class="switch-label tab-controls" for="tab-reveal">Tab to Reveal</label>
 <main>
-  <header class="slide">
+  <header>
+    <div class="slide">
      <h1 id="css-svg-_the-dynamic-duo-_">CSS &amp; SVG <em>The Dynamic Duo!</em></h1>
 <p>A presentation by<br>Amelia Bellamy-Royds<br>at<br>CSS Day 2016 (Amsterdam, 17 June)</p>
+    </div>
+    <div class="slide only-in-slides">
+      <figure>
+<svg viewBox="-100 0 200 90" style="text-anchor: middle; fill: currentColor">
+  <defs><path id="title-slide-arc" d="M-90,65 C -35,80 35,80 90,65" pathLength="180"/></defs>
+  <use xlink:href="#title-slide-text-block" y="3" />
+  <use xlink:href="#title-slide-text-block" y="1.5" fill="#ff8"/>
+  <text id="title-slide-text-block" class="h" style="font-size: 36px;"><tspan style="text-anchor: end" x="-20" y="28">CSS </tspan><tspan style="font-size: 56px" x="0" y="42">&amp;</tspan><tspan style="text-anchor: start" x="20" y="28"> SVG</tspan></text>
+  <text y="75" class="h-em" style="font-size: 24px; filter: drop-shadow(0 0 2px #ff8)" textLength="180"><textPath xlink:href="#title-slide-arc" startOffset="50%" >The Dynamic Duo!</textPath></text>
+  <g id="title-slide-shields">
+    <image xlink:href="demos-figures/css-shield.svg" 
+           x="-11" y="-8" width="22" height="16" 
+           transform="translate(-50,40) rotate(30)"/>
+    <image xlink:href="demos-figures/svg-shield.svg" 
+         x="-7.5" y="-14" width="15" height="28" 
+         transform="translate(50,40) rotate(-30)"/>
+  </g>
+  <style type="text/css">
+    .slide:focus #title-slide-shields > image {
+      transition: transform cubic-bezier(0.5,1, 0.8,1.2) 0.7s;
+    }
+    #title-slide-shields > image:first-child {
+      transform: translate(-120px,-30px) rotate(0deg) scale(1.3);
+    }
+    .slide:focus #title-slide-shields > image:first-child {
+      transform: translate(-50px,40px) rotate(20deg) scale(1.5);
+    }
+    #title-slide-shields > image:last-child {
+      transform: translate(120px,-30px) rotate(0deg) scale(1.3);
+    }
+    .slide:focus #title-slide-shields > image:last-child {
+      transform: translate(50px,40px) rotate(-20deg) scale(1.5);
+    }
+  </style>
+</svg>
+      </figure>
+    </div>
 </header>
 <section>
   <div class="slide">
@@ -381,20 +434,24 @@ A graphics language for the web.</p>
 <img style="float: right; max-width: 25%; max-height: 50vh; transform: rotate(-10deg); shape-outside: content-box" src="demos-figures/svg-shield.svg">
 <img style="float: right; max-width: 35%; max-height: 35vh; margin-top: 20vh; margin-right: -15vmin; transform: rotate(10deg); shape-outside: content-box" src="demos-figures/css-shield.svg">
 <ul>
-<li><p>Transforms.
-<span class="hide-in-slides">2D Transformations have been a fundamental part of SVG layout from the beginning.  CSS extends that syntax with some new shorthands, units and percentages, and 3D transformations to take it to a whole new dimension.</span></p>
+<li><svg><text y="1em" transform="skewY(-5)">Transforms</text></svg>
+<p class="hide-in-slides">2D Transformations have been a fundamental part of SVG layout from the beginning.  CSS extends that syntax with some new shorthands, units and percentages, and 3D transformations to take it to a whole new dimension.</p>
 </li>
-<li><p>Clip-paths.
-  <span class="hide-in-slides">CSS had the <code>clip</code> property for years, but didn't know what to do with it.  Rather than trying to fix clip's bad syntax, CSS has now borrowed SVG's <code>clip-path</code>.  CSS clip-path added in shorthand shape functions so you don't need SVG markup for simple clipping effects, but you still <em>can</em> use SVG for fancier effects.</span></p>
+<li><svg><clipPath id="cp" clipPathUnits="objectBoundingBox"><polygon points="-0.4 0, 1.4 0, 0.8 0.5, 1.4 1, -0.4 1, 0.2 0.5"/></clipPath><text y="1em" clip-path="url(#cp)">Clip-paths</text></svg>
+  <p class="hide-in-slides">CSS had the <code>clip</code> property for years, but didn't know what to do with it.  Rather than trying to fix clip's bad syntax, CSS has now borrowed SVG's <code>clip-path</code>.  CSS clip-path added in shorthand shape functions so you don't need SVG markup for simple clipping effects, but you still <em>can</em> use SVG for fancier effects.</p>
 </li>
-<li><p>Masks.
-  <span class="hide-in-slides">Masks fade away text, shapes, and images according to the color or opacity of another graphic.  The new CSS syntax allows you to specify a mask image or CSS gradient, but you can also reference a more complex mask defined with SVG markup.</span></p>
+<li><svg><linearGradient id="lg" spreadMethod="reflect" x2="20px" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="white"/><stop offset="1" stop-color="#222"/></linearGradient><mask id="m"><rect width="100%" height="100%" fill="url(#lg)"/></mask><text y="1em" style="mask: url(#m)">Masks</text></svg>
+  <p class="hide-in-slides">Masks fade away text, shapes, and images according to the color or opacity of another graphic.  The new CSS syntax allows you to specify a mask image or CSS gradient, but you can also reference a more complex mask defined with SVG markup.</p>
 </li>
-<li><p>Filters.
-  <span class="hide-in-slides">Blurs, drop-shadows, color manipulation: SVG filters are all kinds of fun.  CSS adds in shorthand notation for the most common effects but (are you seeing a pattern here?) you can still use SVG markup for fancier effects.</span></p>
+<li><svg><filter id="glow"><feMorphology operator="dilate" radius="1 3" /><feColorMatrix values="
+  -0.5 0 0 1 0 
+  0 -0.5 0 1 0
+  0 0 -0.5 1 0
+  0 0 0 1 0"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter><text y="1em" filter="url(#glow)">Filters</text></svg>
+  <p class="hide-in-slides">Blurs, drop-shadows, color manipulation: SVG filters are all kinds of fun.  CSS adds in shorthand notation for the most common effects but (are you seeing a pattern here?) you can still use SVG markup for fancier effects.</p>
 </li>
-<li><p>Blend modes.
-  <span class="hide-in-slides">SVG Filters defined a way of setting blend modes to composite content into the background.  But graphics editors over-used the attribute that turned on background compositing, and web browsers responded by refusing to implement it because of performance reasons.  Which was very disappointing for a while, but now we're getting much easier to use blend modes.</span></p>
+<li><svg style="isolation: isolate"><ellipse id="blend-ellipse" cx="3em" rx="2em" cy="0.7em" ry="0.7em" fill="tomato" /><text y="1em" dy="-0.5ex" style="fill: darkCyan;  mix-blend-mode: screen">Blend modes</text></svg>
+  <p class="hide-in-slides">SVG Filters defined a way of setting blend modes to composite content into the background.  But graphics editors over-used the attribute that turned on background compositing, and web browsers responded by refusing to implement it because of performance reasons.  Which was very disappointing for a while, but now we're getting much easier to use blend modes.</p>
 </li>
 </ul>
 <p class="hide-in-slides">Other SVG-crossover features have been proposed, but aren't in browsers yet.  That includes filled and stroked text as well as <code>viewBox</code> scaling.</p>
